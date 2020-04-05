@@ -9,6 +9,7 @@ namespace FUPlaner.Configuration {
   public class LessonProfile : Profile {
     public LessonProfile () {
       CreateMap<Lesson, LessonFormDisplay> ()
+        .ForMember(dest => dest.Token, opt => opt.Ignore())
         .ForMember (
           dest => dest.SubjectToken,
           opt => opt.MapFrom (x => x.Subject.ToString ()))
@@ -19,7 +20,11 @@ namespace FUPlaner.Configuration {
 
       CreateMap<LessonFormInput, LessonFormDisplay> ();
 
-      CreateMap<LessonFormInput, Lesson> ();
+      CreateMap<LessonFormInput, Lesson> ()
+        .ForMember(
+          dest => dest.Subject,
+          opt => opt.MapFrom(src => src.SubjectToken)
+        );
 
       CreateMap<Lesson, LessonDisplay.Lesson> ()
         .ForMember (

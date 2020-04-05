@@ -73,3 +73,16 @@ body {
 textarea.text {
   height: 10em;
 }
+
+tr.MA {
+  border-top: 3px solid rgb(180, 210, 240);
+}
+tr.MA td:first-child span {
+  background-color: rgb(180, 210, 240);
+}
+tr.D {
+  border-top: 3px solid rgb(180, 220, 180);
+}
+tr.D td:first-child span {
+  background-color: rgb(180, 220, 180);
+}

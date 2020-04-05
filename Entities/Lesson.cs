@@ -13,7 +13,7 @@ namespace FUPlaner.Entities {
     public Subject Subject { get; set; }
     public int Level { get; set; }
     public int LessonNumber { get; set; }
-    public string Token => Subject.ToString () + (Level > 0 ? $"{Level}." : "") + $"{LessonNumber}";
+    public string Token => Subject.ToString () + (Level > 0 ? $"{Level}." : "") + $"{LessonNumber:00}";
     public bool IsAppointment => AppointmentTime.IsNotNullOrEmpty ();
     public string AppointmentTime { get; set; }
     public bool MustSend { get; set; }

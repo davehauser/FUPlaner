@@ -5,6 +5,7 @@ using FUPlaner.Helpers;
 
 namespace FUPlaner.Models {
   public class LessonDisplay : LessonBase {
+    public LessonDisplay() {}
     public LessonDisplay (Subject subject) {
       Subject = subject.GetDescription ();
       SubjectToken = subject.ToString ();
