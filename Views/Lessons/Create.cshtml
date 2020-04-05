@@ -1,0 +1,11 @@
+@model LessonFormDisplay;
+
+@{
+    ViewData["Title"] = "Lektionen";
+}
+
+<div class="text-center">
+  <h1 class="display-4">Lektionen - Lektion hinzufügen</h1>
+  <partial name="_PageMessage"></partial>
+</div>
+<partial name="_Form.cshtml" model="@Model"></partial>

@@ -1,0 +1,22 @@
+@{
+    ViewData["Title"] = "Lektionen";
+}
+
+<div class="text-center">
+  <h1 class="display-4">Lektionen</h1>
+  <partial name="_PageMessage"></partial>
+    <nav>
+      <ul class="list-group">
+        <li class="list-group-item"><a asp-action="Index" asp-route-subject="MA">Mathematik</a></li>
+        <li class="list-group-item"><a asp-action="Index" asp-route-subject="D">Deutsch</a></li>
+        <li class="list-group-item"><a asp-action="Index" asp-route-subject="NMG">Natur, Mensch, Gesellschaft</a></li>
+        <li class="list-group-item"><a asp-action="Index" asp-route-subject="TTG">Gestalten</a></li>
+        <li class="list-group-item"><a asp-action="Index" asp-route-subject="E">Englisch</a></li>
+        <li class="list-group-item"><a asp-action="Index" asp-route-subject="BS">Bewegung und Sport</a></li>
+        <li class="list-group-item"><a asp-action="Index" asp-route-subject="MU">Musik</a></li>
+        <li class="list-group-item"><a asp-action="Index" asp-route-subject="F">Französisch</a></li>
+        <li class="list-group-item"><a asp-action="Index" asp-route-subject="P">Projekt</a></li>
+        <li class="list-group-item"><a asp-action="Index" asp-route-subject="A">Allgemein</a></li>
+      </ul>
+    </nav>
+</div>

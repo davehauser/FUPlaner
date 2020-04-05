@@ -1,0 +1,6 @@
+@if(TempData["messageText"] != null) {
+  var cssClass = (TempData["messageType"].ToString() == "success") ? "alert-success" : "alert-danger";
+  <div class="alert @cssClass">
+    @TempData["messageText"]
+  </div>
+}
