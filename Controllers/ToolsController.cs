@@ -12,13 +12,10 @@ namespace FUPlaner.Controllers {
     public ToolsController (IData data) {
       _data = data;
     }
-    public IActionResult PopulateLessons (Subject subject) {
+    public IActionResult PopulateLessons (Subject subject, int level, int minLessonNumber = 1, int maxLessonNumber = 55) {
       var lessons = new List<Lesson> ();
-      for (var i = 1; i <= 100; i++) {
-        var lesson = new Lesson (subject) {
-          Level = 4,
-          LessonNumber = i
-        };
+      for (var i = minLessonNumber; i <= maxLessonNumber; i++) {
+        var lesson = new Lesson (subject, level, i);
         lessons.Add (lesson);
         _data.Lessons.Save (lesson);
       }
@@ -31,21 +28,26 @@ namespace FUPlaner.Controllers {
       return Json (true);
     }
 
-    public IActionResult GenerateDemoPlan()
-    {
-      var start = new DateTime(2020, 04, 27);
+    public IActionResult GenerateDemoPlan () {
+      var start = new DateTime (2020, 04, 27);
       var plan = new Plan {
         Start = start,
-        End = new DateTime(2020, 5, 1),
-        Days = Enumerable.Range(0, 5).Select(x => new Plan.Day {
-          Date = start.AddDays(x),
-          LessonTokens = new List<string> {
-            "MA4.01", "D91", "NMG01", "TTG01"
-          }
-        }).ToList()
+        End = new DateTime (2020, 5, 1),
+        Days = Globals.Plan.DefaultPlan.Select ((x, index) => new Plan.Day {
+        LessonTokens = x.Select (t => new LessonToken (t, 4, index)).ToList ()
+        }).ToList ()
       };
-      _data.Plans.Save(plan);
-      return RedirectToAction("Index", new { id = plan.Id });
+      _data.Plans.Save (plan);
+      return RedirectToAction ("Index", new { id = plan.Id });
+    }
+
+    public IActionResult GetPlans () {
+      var plans = _data.Plans.FindAll ();
+      return Json (plans);
+    }
+    public IActionResult GetLessons () {
+      var lessons = _data.Lessons.FindAll ();
+      return Json (lessons);
     }
   }
 }

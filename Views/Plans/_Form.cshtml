@@ -1,125 +1,116 @@
-@model LessonFormDisplay;
+@model PlanFormDisplay;
 
 <form method="POST">
   <div asp-validation-summary="ModelOnly"></div>
-  <input asp-for="Id" />
-  <fieldset>
-    <legend>Allgemeine Daten</legend>
-    <div class="row">
-      <div class="col-sm">
-        <label>Lektion</label>
-        <p id="token">@Model.Token</p>
-      </div>
-      <div class="col-sm">
-        <label asp-for="SubjectToken">Fach</label>
-        @if(Model.Id > 0) {
-          <p>@Model.SubjectName</p>
-          <input type="hidden" asp-for="SubjectToken" />
-        }
-        else {
-          <select asp-for="SubjectToken" asp-items="Model.SubjectsList" class="form-control"></select>
-          <span asp-validation-for="SubjectToken"></span>
-        }
-      </div>
-      <div class="col-sm">
-        <div class="form-group">
-          <label asp-for="Level"></label>
-          <select asp-for="Level" asp-items="Model.LevelsList" class="form-control"></select>
-          <span asp-validation-for="Level"></span>
-        </div>
-      </div>
-      <div class="col-sm">
-        <div class="form-group">
-          <label asp-for="LessonNumber"></label>
-          <input asp-for="LessonNumber" min="1"  class="form-control"/>
-          <span asp-validation-for="LessonNumber"></span>
-        </div>
-      </div>
-      <div class="col-sm">
-        <div class="form-group">
-          <label asp-for="MustSend"></label>
-          <input asp-for="MustSend" class="form-control"/>
-          <span asp-validation-for="MustSend"></span>
-        </div>
-      </div>
-      <div class="col-sm">
-        <div class="form-group">
-          <label asp-for="AppointmentTime"></label>
-          <input asp-for="AppointmentTime" patter="00:00"  class="form-control"/>
-          <span asp-validation-for="AppointmentTime"></span>
-        </div>
-      </div>
-    </div>
-  </fieldset>
+  <input type="hidden" asp-for="Id" />
   <div class="row">
-    <div class="col">
-      <fieldset>
-        <legend>Auftrag</legend>
-        <div class="form-group">
-          @Html.EditorFor(x => x.Task, null, new { htmlAttributes = new { @class = "form-control", style = "height: 10em;" } })
-        </div>
-      </fieldset>
+    <div class="col-sm">
+      <label asp-for="Level">Klasse</label>
+      <select asp-for="Level" asp-items="Model.LevelsList" class="form-control"></select>
+    </div>
+    <div class="col-sm">
+      <label asp-for="Start">Startdatum</label>
+      <input asp-for="Start" type="date" class="form-control" />
+    </div>
+    <div class="col-sm">
+      <label for="End">Enddatum</label>
+      <input id="End" name="Start" type="date" class="form-control" />
     </div>
   </div>
-  <fieldset>
-    <legend>Links</legend>
-    @for(var i = 0; i < Model.Links.Count(); i++) {
-      <div class="row">
-        <div class="col-sm">
-          <div class="form-group">
-            @Html.LabelFor(x => x.Links[i].Url)
-            @Html.EditorFor(x => x.Links[i].Url, null, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(x => x.Links[i].Url)
-          </div>
-        </div>
-        <div class="col-sm">
-          <div class="form-group">
-            @Html.LabelFor(x => x.Links[i].DisplayText)
-            @Html.EditorFor(x => x.Links[i].DisplayText, null, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(x => x.Links[i].DisplayText)
-          </div>
-        </div>
-      </div>
-    }
-    @for(var i = Model.Links.Count(); i < Model.Links.Count() + 3; i++) {
-      <div class="row">
-        <div class="col-sm">
-          <div class="form-group">
-            <label for="links[@i].Url">Url</label>
-            <input type="text" id="Links[@i].Url" name="Links[@i].Url" class="form-control" value="" />
-          </div>
-        </div>
-        <div class="col-sm">
-          <div class="form-group">
-            <label for="links[@i].DisplayText">Anzeigetext</label>
-            <input type="text" id="Links[@i].DisplayText" name="Links[@i].DisplayText" class="form-control" value="" />
-          </div>
-        </div>
-      </div>
-    }
+  @{ var d = 0; }
+  @foreach(var day in Model.Days) {
+  <fieldset id="day[@d]" class="day">
+    <legend class="weekday">@day.Name</legend>
+    <table class="table day">
+      @{var i = 0;}
+      @foreach(var lesson in day.Lessons) {
+        <tr>
+          <td>
+            <select id="Days[@day.Index].Tokens[@i]" name="Days[@day.Index].Tokens[@i]" class="form-control">
+              @foreach(var token in lesson.LessonsList) {
+                <option value="@token.Value" selected="@token.Selected">@token.Text</option>
+              }
+            </select>
+            @* <input type="text" id="Days[@day.Index].Tokens[@i]" name="Days[@day.Index].Tokens[@i]" value="@lesson.Token" class="form-control" /> *@
+          </td>
+          <td style="white-space:nowrap;">
+              @(lesson.IsAppointment ? "🕗" : "")
+          </td>
+          <td>
+              @(lesson.MustSend ? "✉️" : "")
+          </td>
+          <td>
+              <p>
+              @if(lesson.IsAppointment) {
+                  <strong>@lesson.AppointmentTime</strong>
+              }
+              @lesson.Task
+              </p>
+              @foreach (var link in lesson.Links) {
+                  <svg width="10" height="10">
+                  <polygon points="2,0 8,5 2,10" />
+                  </svg>
+                  <a href="@link.Url">@(link.DisplayText ?? link.Url)</a><br>
+              }
+          </td>
+        </tr>
+        i++;
+      }
+    </table>
   </fieldset>
+  d++;
+  }
   <div class="row">
     <div class="col">
       <button type="submit" class="btn btn-primary">Speichern</button>
-      <a asp-action="Index" asp-route-subject="@Model.SubjectToken" class="btn btn-link">Abbrechen</a>
+      <a asp-action="Index" class="btn btn-link">Abbrechen</a>
     </div>
   </div>
 </form>
 
 <script type="text/javascript">
-  const inputs = document.querySelectorAll('select, input');
-  const subjectTokenElement = document.querySelector('#SubjectToken');
-  const levelElement = document.querySelector('#Level');
-  const lessonNumberElement = document.querySelector('#LessonNumber');
-  inputs.forEach(x => x.addEventListener('change', y => {
-    let subjectToken = subjectTokenElement.value;
-    let level = levelElement.value;
-    if(level === '0') { level = ''; }
-    else { level = level + '.'; }
-    let lessonNumber = lessonNumberElement.value.padStart(2, '0');
-    let token = (subjectToken ?? '@Model.SubjectToken') + level + lessonNumber;
-    document.querySelector('#token').textContent = token;
-  }));
+  var weekdays = new Array(5);
+  weekdays[0] = 'Sonntag';
+  weekdays[1] = 'Montag';
+  weekdays[2] = 'Dienstag';
+  weekdays[3] = 'Mittwoch';
+  weekdays[4] = 'Donnerstag';
+  weekdays[5] = 'Freitag';
+  weekdays[6] = 'Samstag';
+  var startDate = getDate(document.querySelector("#Start").value);
+  var endDate = getDate(document.querySelector("#End").value);
+  
+  function getDate(value) {
+    var date = value;
+    if(date.indexOf('.') >= 0)
+    {
+      date = value.substring(value.lastIndexOf('.'), value.length) + '-' + value.substring(value.indexOf('.'), value.lastIndexOf('.')) + '-' + value.substring(0, value.indexOf('.'));
+    }
+    return new Date(Date.parse(date));
+  }
+  function setDaysDisplay() {
+    if(startDate && endDate) {
+      var dayCount = (endDate - startDate) / (1000 * 60 * 60 * 24);
+      document.querySelectorAll('fieldset.day').forEach(function(el, i) {
+        el.style.display = (i <= dayCount) ? 'block' : 'none';
+      });
+    }
+  }
+
+  document.querySelector('#Start').addEventListener("change", function() {
+    startDate = getDate(this.value);
+    document.querySelectorAll(".weekday").forEach(function(el, i) {
+      var d = new Date(startDate);
+      d.setDate(startDate.getDate() + i);
+      el.textContent = weekdays[d.getDay()] + ', ' + d.getDate() + '.' + d.getMonth() + '.';
+    });
+    setDaysDisplay();
+  });
+
+  document.querySelector('#End').addEventListener("change", function() {
+    endDate = getDate(this.value);
+    setDaysDisplay();
+  });
 </script>
 
 

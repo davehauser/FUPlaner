@@ -10,20 +10,26 @@ namespace FUPlaner.Helpers {
       return !s.IsNullOrEmpty ();
     }
 
-    public static string GetSubjectTokenFromLessonToken(this string lessonToken)
-    {
-      return Regex.Match(lessonToken, "[A-Za-z]+").Value;
+    public static string GetSubjectTokenFromLessonToken (this string lessonToken) {
+      if (lessonToken == null) {
+        return "";
+      }
+      return Regex.Match (lessonToken, "[A-Za-z]+").Value;
     }
-    public static int GetLevelFromLessonToken (this string lessonToken)
-    {
-      var stringValue = Regex.Match(lessonToken, @"(\d)\.")?.Groups[1].Value;
-      int.TryParse(stringValue, out var value);
+    public static int GetLevelFromLessonToken (this string lessonToken) {
+      if (lessonToken == null) {
+        return 0;
+      }
+      var stringValue = Regex.Match (lessonToken, @"(\d)\.")?.Groups[1].Value;
+      int.TryParse (stringValue, out var value);
       return value;
     }
-     public static int GetLessonNumberromLessonToken (this string lessonToken)
-    {
-      var stringValue = Regex.Match(lessonToken, @"\d{2,}")?.Groups[0].Value;
-      int.TryParse(stringValue, out var value);
+    public static int GetLessonNumberromLessonToken (this string lessonToken) {
+      if (lessonToken == null) {
+        return 0;
+      }
+      var stringValue = Regex.Match (lessonToken, @"\d{2,}")?.Groups[0].Value;
+      int.TryParse (stringValue, out var value);
       return value;
     }
   }

@@ -7,11 +7,14 @@
 <div class="text-center">
   <h1 class="display-4">Pläne</h1>
   <partial name="_PageMessage"></partial>
-    <nav>
-      <ul class="list-group">
-        @foreach(var plan in Model) {
-          <li class="list-group-item"><a asp-action="Show" asp-route-id="@plan.Id">@plan.Title</a></li>
-        }
-      </ul>
-    </nav>
+  <p>
+    <a asp-action="Create" class="btn btn-primary">Plan hinzufügen</a>
+  </p>
+  <nav>
+    <ul class="list-group">
+      @foreach(var plan in Model) {
+        <li class="list-group-item"><a asp-action="Show" asp-route-id="@plan.Id">@plan.Title</a></li>
+      }
+    </ul>
+  </nav>
 </div>

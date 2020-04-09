@@ -7,19 +7,16 @@ using FUPlaner.Helpers;
 namespace FUPlaner.Entities {
   public class Lesson : Entity {
     public Lesson () { }
-    public Lesson (Subject subject) {
-      Subject = subject;
+    public Lesson (Subject subject, int level, int lessonNumber) {
+      Token = new LessonToken (subject, level, lessonNumber);
     }
-    public Subject Subject { get; set; }
-    public int Level { get; set; }
-    public int LessonNumber { get; set; }
-    public string Token => Subject.ToString () + (Level > 0 ? $"{Level}." : "") + $"{LessonNumber:00}";
+    public LessonToken Token { get; set; }
     public bool IsAppointment => AppointmentTime.IsNotNullOrEmpty ();
     public string AppointmentTime { get; set; }
     public bool MustSend { get; set; }
     public string Task { get; set; }
     //public IList<Link> Links { get; set; }
-    public LinkCollection Links { get; set; }
+    public LinkCollection Links { get; set; } = new LinkCollection ();
 
     public class LinkCollection : Collection<Link>, IEnumerable<Link>, IEnumerable {
 

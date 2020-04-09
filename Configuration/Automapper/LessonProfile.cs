@@ -9,27 +9,19 @@ namespace FUPlaner.Configuration {
   public class LessonProfile : Profile {
     public LessonProfile () {
       CreateMap<Lesson, LessonFormDisplay> ()
-        .ForMember(dest => dest.Token, opt => opt.Ignore())
-        .ForMember (
-          dest => dest.SubjectToken,
-          opt => opt.MapFrom (x => x.Subject.ToString ()))
-        .ForMember (
-          dest => dest.SubjectName,
-          opt => opt.MapFrom (src => src.Subject.GetDescription ())
-        );
+        .ForMember (dest => dest.SubjectToken, opt => opt.Ignore ())
+        .ForMember (dest => dest.Level, opt => opt.Ignore ())
+        .ForMember (dest => dest.LessonNumber, opt => opt.Ignore ())
+        .ForMember(dest => dest.Token, opt => opt.MapFrom(x => x.Token.ToString()));
 
       CreateMap<LessonFormInput, LessonFormDisplay> ();
 
       CreateMap<LessonFormInput, Lesson> ()
-        .ForMember(
-          dest => dest.Subject,
-          opt => opt.MapFrom(src => src.SubjectToken)
-        );
+        .ForMember (dest => dest.Token, opt => opt.MapFrom (src => new LessonToken (src.SubjectToken, src.Level, src.LessonNumber)));
 
-      CreateMap<Lesson, LessonDisplay.Lesson> ()
-        .ForMember (
-          dest => dest.SubjectToken,
-          opt => opt.MapFrom (src => src.Subject.ToString ()));
+      CreateMap<Lesson, LessonDisplay> ()
+        .ForMember(dest => dest.Token, opt => opt.MapFrom(x => x.Token.ToString()))
+        .ForMember (dest => dest.SubjectToken, opt => opt.MapFrom (src => src.Token.Subject.ToString ()));
 
       CreateMap<Lesson.Link, LessonBase.Link> ().ReverseMap ();
     }

@@ -25,19 +25,17 @@ namespace FUPlaner.Controllers {
     [HttpGet ("{controller}/{subject}")]
     public IActionResult Index (Subject subject) {
       var lessons = _data.Lessons.FindAll()
-        .Where(x => x.Subject == subject)
-        .OrderBy (x => x.LessonNumber);
-      //Find (x => x.Subject == subject);
-      var viewModel = new LessonDisplay (subject);
-      viewModel.Lessons = _mapper.Map<List<LessonDisplay.Lesson>> (lessons);
+        .Where(x => x.Token.Subject == subject)
+        .OrderBy (x => x.Token.LessonNumber);
+      var viewModel = new LessonIndex (subject);
+      viewModel.Lessons = _mapper.Map<List<LessonDisplay>> (lessons);
       return View ("IndexBySubject", viewModel);
     }
 
     [HttpGet]
     public IActionResult Create (Subject subject) {
       var viewModel = new LessonFormDisplay {
-        SubjectToken = subject.ToString (),
-        SubjectName = subject.GetDescription ()
+        SubjectToken = subject.ToString ()
       };
       return View (viewModel);
     }

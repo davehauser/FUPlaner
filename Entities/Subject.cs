@@ -20,7 +20,9 @@ namespace FUPlaner.Entities {
     F,
     [Display (Name = "Projekt")]
     P,
-    [Display (Name = "Allgemein")]
-    A
+    [Display (Name = "Verschiedenes")]
+    V,
+    [Display(Name = "Klassenstunde")]
+    K
   }
 }

@@ -1,19 +1,9 @@
-using System;
 using System.Collections.Generic;
-using FUPlaner.Entities;
-using FUPlaner.Helpers;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FUPlaner.Models {
   public class LessonDisplay : LessonBase {
-    public LessonDisplay() {}
-    public LessonDisplay (Subject subject) {
-      Subject = subject.GetDescription ();
-      SubjectToken = subject.ToString ();
-    }
-    public string Subject { get; set; }
-    public List<Lesson> Lessons { get; set; }
-    public class Lesson : LessonBase {
-      public IList<Link> Links { get; set; }
-    }
+    public IList<Link> Links { get; set; } = new List<Link> ();
+    public IList<SelectListItem> LessonsList { get; set; } = new List<SelectListItem> ();
   }
 }

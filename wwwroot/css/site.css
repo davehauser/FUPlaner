@@ -74,15 +74,72 @@ textarea.text {
   height: 10em;
 }
 
+table.plan td:first-child {
+  padding: 0;
+}
+table.plan td:first-child span {
+  padding: .75em;
+  display: block;
+}
+table.plan td:nth-of-type(2) {
+  padding-right: .25em;
+}
+table.plan td:nth-of-type(3) {
+  padding-left: .25em;
+}
+table.plan td {
+  padding-bottom: 2em;
+}
 tr.MA {
-  border-top: 3px solid rgb(180, 210, 240);
+  border-top: 3px solid rgb(143, 239, 251);
 }
 tr.MA td:first-child span {
-  background-color: rgb(180, 210, 240);
+  background-color: rgb(143, 239, 251);
 }
 tr.D {
-  border-top: 3px solid rgb(180, 220, 180);
+  border-top: 3px solid rgb(175, 241, 182);
 }
 tr.D td:first-child span {
-  background-color: rgb(180, 220, 180);
+  background-color: rgb(175, 241, 182);
 }
+tr.NMG {
+  border-top: 3px solid rgb(252, 232, 131);
+}
+tr.NMG td:first-child span {
+  background-color: rgb(252, 232, 131);
+}
+tr.TTG {
+  border-top: 3px solid rgb(255, 204, 165);
+}
+tr.TTG td:first-child span {
+  background-color: rgb(255, 204, 165);
+}
+tr.E {
+  border-top: 3px solid rgb(156, 219, 255);
+}
+tr.E td:first-child span {
+  background-color: rgb(156, 219, 255);
+}
+tr.F {
+  border-top: 3px solid rgb(205, 209, 247);
+}
+tr.F td:first-child span {
+  background-color: rgb(205, 209, 247);
+}
+tr.P {
+  border-top: 3px solid rgb(255, 199, 238);
+}
+tr.P td:first-child span {
+  background-color: rgb(255, 199, 238);
+}
+tr.A {
+  border-top: 3px solid rgb(207, 215, 223);
+}
+tr.A td:first-child span {
+  background-color: rgb(207, 215, 223);
+}
+table.day td:first-child {
+  width: 8em;
+}
+
+
