@@ -1,26 +1,28 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace FUPlaner.Entities {
-  public enum Subject {
-    [Display (Name = "Mathematik")]
+namespace FUPlaner.Entities
+{
+  public enum Subject
+  {
+    [Display(Name = "Mathematik")]
     MA,
-    [Display (Name = "Deutsch")]
+    [Display(Name = "Deutsch")]
     D,
-    [Display (Name = "Natur, Mensch, Gesellschaft")]
+    [Display(Name = "Natur, Mensch, Gesellschaft")]
     NMG,
-    [Display (Name = "Englisch")]
+    [Display(Name = "Englisch")]
     E,
-    [Display (Name = "Gestalten")]
+    [Display(Name = "Gestalten")]
     TTG,
-    [Display (Name = "Bewegung und Sport")]
+    [Display(Name = "Bewegung und Sport")]
     BS,
-    [Display (Name = "Musik")]
+    [Display(Name = "Musik")]
     MU,
-    [Display (Name = "Französisch")]
+    [Display(Name = "Französisch")]
     F,
-    [Display (Name = "Projekt")]
+    [Display(Name = "Projekt")]
     P,
-    [Display (Name = "Verschiedenes")]
+    [Display(Name = "Verschiedenes")]
     V,
     [Display(Name = "Klassenstunde")]
     K
